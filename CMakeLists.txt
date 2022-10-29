@@ -1,9 +1,11 @@
-cmake_minimum_required(3.18)
+cmake_minimum_required(VERSION 3.18)
 project(quotes)
 
 set(CMAKE_CXX_STANDARD 20)
 
 add_subdirectory(libs/wxWidgets)
-add_executable(QuoteApp main.cpp MainWindow.cpp QuoteApp.cpp)
-target_link_libraries(QuoteApp wx::core wx::base)
+add_executable(QuoteApp QuoteApp.cpp MainWindow.cpp main.cpp)
+target_link_libraries(QuoteApp wx::core wx::base wx::net)
+
+set(wxBUILD_SHARED OFF)
 
