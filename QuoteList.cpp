@@ -2,7 +2,7 @@
 
 int QuoteList::rec_counter = 0;
 
-QuoteList::QuoteList(wxWindow *parent,  const wxWindowID id, const wxPoint &pos, const wxSize &size, long style)
+QuoteList::QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, const wxSize &size, long style)
     : wxListCtrl(parent, id, pos, size, style) {
         wxListItem col;
         col.SetId(0);

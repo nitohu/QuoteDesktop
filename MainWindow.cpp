@@ -1,4 +1,5 @@
 #include "MainWindow.hpp"
+#include "NewQuoteDialog.hpp"
 
 MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
     // Create main quote menu
@@ -47,12 +48,15 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 }
 
 void MainWindow::OnNewQuote(wxCommandEvent &evt) {
-    // wxLogMessage("Create new quote");
-    m_quoteList->AddListItem("Newly Added", "No Author");
+    NewQuoteDialog diag(this);
+
+    if (diag.ShowModal() == wxID_OK) {
+        m_quoteList->AddListItem(diag.GetQuote(), diag.GetAuthor());
+    }
 }
 
 void MainWindow::InitQuoteList() {
-    for (int i = 1; i <= 10; i++) {
+    for (int i = 1; i <= 5; i++) {
         m_quoteList->AddListItem(wxString::Format("Item No. %d", i), wxString::Format("Author %d", i));
     }
 }
