@@ -11,15 +11,34 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
     wxMenu *menuAbout = new wxMenu;
     menuAbout->Append(wxID_ABOUT);
 
-    // Create menu & status bar
+    // Create menu bar
     wxMenuBar *menuBar = new wxMenuBar;
-    menuBar->Append(menuQuotes);
-    menuBar->Append(menuAbout);
+    menuBar->Append(menuQuotes, "&Quotes");
+    menuBar->Append(menuAbout, "&About");
 
     SetMenuBar(menuBar);
 
+    m_panel = new wxPanel(this, wxID_ANY);
+    m_quoteList = new QuoteList(m_panel,
+                                    ID_QuoteList,
+                                    wxDefaultPosition,
+                                    wxDefaultSize,
+                                    wxLC_REPORT | wxBORDER_THEME | wxLC_EDIT_LABELS); 
+
+    // Create status bar
     CreateStatusBar();
     SetStatusText("Some random introduction quote...");
+
+    // Create list view
+    wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
+    
+    sizer->Add(m_quoteList, wxSizerFlags(2).Expand().Border());
+
+    m_panel->SetSizer(sizer);
+
+    SetClientSize(m_panel->GetBestSize());
+
+    InitQuoteList();
 
     // Create button bindings
     Bind(wxEVT_MENU, &MainWindow::OnNewQuote, this, ID_NewQuote);
@@ -27,15 +46,23 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
     Bind(wxEVT_MENU, &MainWindow::OnExit, this, wxID_EXIT);
 }
 
-void MainWindow::OnNewQuote() {
+void MainWindow::OnNewQuote(wxCommandEvent &evt) {
     wxLogMessage("Create new quote");
 }
 
-void MainWindow::OnAbout() {
+void MainWindow::InitQuoteList() {
+    for (int i = 1; i <= 10; i++) {
+        long n = m_quoteList->InsertItem(i, wxString::Format("Item No. %d", i));
+
+        m_quoteList->SetItem(n, 1, wxString::Format("Author %d", i));
+    }
+}
+
+void MainWindow::OnAbout(wxCommandEvent &evt) {
     wxMessageBox("This is a small app for storing quotes", "About Quotes", wxOK | wxICON_INFORMATION);
 }
 
-void MainWindow::OnExit() {
+void MainWindow::OnExit(wxCommandEvent &evt) {
     Close(true);
 }
 
