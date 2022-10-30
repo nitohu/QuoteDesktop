@@ -14,6 +14,8 @@ public:
     void AddListItem(wxString author, wxString quote);
     void ClearList();
     void LoadFile(wxString file_path);
+    void WriteFile();
+    void WriteFile(wxString file_path);
 
 private:
     static int m_recCounter;

@@ -22,6 +22,8 @@ public:
 private:
     void OnNewQuote(wxCommandEvent &evt);
     void OnOpenFile(wxCommandEvent &evt);
+    void OnSave(wxCommandEvent &evt);
+    void OnSaveAs(wxCommandEvent &evt);
     void OnExit(wxCommandEvent &evt);
     void OnAbout(wxCommandEvent &evt);
 
@@ -30,6 +32,8 @@ private:
 
 enum {
     ID_NewQuote = 1,
-    ID_OpenFile
+    ID_OpenFile,
+    ID_SaveFile,
+    ID_SaveFileAs
 };
 

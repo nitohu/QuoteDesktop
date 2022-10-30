@@ -2,6 +2,7 @@
 #include <ArduinoJson.h>
 
 #include <iostream>
+#include <fstream>
 
 int QuoteList::m_recCounter = 0;
 int QuoteList::m_maxArrSize = 50;
@@ -70,6 +71,45 @@ void QuoteList::LoadFile(wxString file_path) {
         }
 
         delete fileContent;
+}
+
+void QuoteList::WriteFile() {
+    WriteFile(m_filePath);
+}
+
+void QuoteList::WriteFile(wxString file_path) {
+    m_filePath = file_path;
+
+    std::ofstream quoteFile;
+    quoteFile.open(m_filePath.utf8_string(), std::ofstream::out | std::ofstream::trunc);
+    if (!quoteFile.is_open()) {
+        std::cout << "Error while opening file " << m_filePath << std::endl;
+        quoteFile.close();
+        return;
+    }
+
+    const int capacity = JSON_ARRAY_SIZE(m_maxArrSize) + m_maxArrSize * JSON_OBJECT_SIZE(2);
+    DynamicJsonDocument doc(capacity);
+    JsonArray root = doc.to<JsonArray>();
+
+    for (int i = 0; i < GetItemCount(); i++) {
+        wxListItem item;
+        JsonObject obj = root.createNestedObject();
+
+        item.SetId(i);
+        GetItem(item);
+        std::string quote = item.GetText().utf8_string();
+        obj["quote"] = quote;
+
+        item.SetColumn(1);
+        GetItem(item);
+        std::string author = item.GetText().utf8_string();
+        obj["author"] = author;
+    }
+
+    serializeJson(root, quoteFile);
+
+    quoteFile.close();
 }
 
 void QuoteList::processFile(wxTextFile &file, wxString *fileContent) {
