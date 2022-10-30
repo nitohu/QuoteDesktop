@@ -6,6 +6,12 @@
 
 #include "QuoteList.hpp"
 
+/**
+* TODO: Store/Save current list of todos
+* TODO: Load different lists with filedialog
+* TODO: Delete elements from the list
+*/
+
 class MainWindow : public wxFrame {
 public:
     MainWindow();

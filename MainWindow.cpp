@@ -39,8 +39,6 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 
     SetClientSize(m_panel->GetBestSize());
 
-    InitQuoteList();
-
     // Create button bindings
     Bind(wxEVT_MENU, &MainWindow::OnNewQuote, this, ID_NewQuote);
     Bind(wxEVT_MENU, &MainWindow::OnAbout, this, wxID_ABOUT);
@@ -51,13 +49,7 @@ void MainWindow::OnNewQuote(wxCommandEvent &evt) {
     NewQuoteDialog diag(this);
 
     if (diag.ShowModal() == wxID_OK) {
-        m_quoteList->AddListItem(diag.GetQuote(), diag.GetAuthor());
-    }
-}
-
-void MainWindow::InitQuoteList() {
-    for (int i = 1; i <= 5; i++) {
-        m_quoteList->AddListItem(wxString::Format("Item No. %d", i), wxString::Format("Author %d", i));
+        m_quoteList->AddListItem(diag.GetAuthor(), diag.GetQuote());
     }
 }
 
