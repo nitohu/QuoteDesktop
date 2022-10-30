@@ -19,10 +19,32 @@ QuoteList::QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, 
         col.SetWidth(200);
         this->InsertColumn(1, col);
 
+        LoadFile(m_filePath); 
+}
+
+void QuoteList::AddListItem(wxString author, wxString quote) {
+    long n = this->InsertItem(m_recCounter, quote);
+    this->SetItem(n, 1, author);
+    m_recCounter++;
+}
+
+void QuoteList::ClearList() {
+    m_recCounter = 0;
+    DeleteAllItems();
+}
+
+void QuoteList::LoadFile(wxString file_path) {
+        m_filePath = file_path;
+
         // NOTE: Optimization potential, wxTextFile is only fine for small files (<1mb)
         // since it loads the whole file content into memory
         wxTextFile quoteFile;
-        quoteFile.Open(m_filePath);
+        quoteFile.Open(file_path);
+
+        if (!quoteFile.IsOpened()) {
+            std::cout << "File " << file_path << " could not be loaded." << std::endl;
+            return;
+        }
     
         wxString *fileContent = new wxString;
         processFile(quoteFile, fileContent);
@@ -48,12 +70,6 @@ QuoteList::QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, 
         }
 
         delete fileContent;
-}
-
-void QuoteList::AddListItem(wxString author, wxString quote) {
-    long n = this->InsertItem(m_recCounter, quote);
-    this->SetItem(n, 1, author);
-    m_recCounter++;
 }
 
 void QuoteList::processFile(wxTextFile &file, wxString *fileContent) {

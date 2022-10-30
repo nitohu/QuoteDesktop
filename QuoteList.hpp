@@ -12,12 +12,14 @@ public:
     QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, const wxSize &size, long style);
 
     void AddListItem(wxString author, wxString quote);
+    void ClearList();
+    void LoadFile(wxString file_path);
 
 private:
     static int m_recCounter;
     static int m_maxArrSize;
 
-    const wxString m_filePath = "/home/nitohu/Development/cpp/quotes/example-data.json";
+    wxString m_filePath = "/home/nitohu/Development/cpp/quotes/example-data.json";
 
     void processFile(wxTextFile&, wxString*);
 };

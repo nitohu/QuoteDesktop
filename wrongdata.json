@@ -1,0 +1,17 @@
+[
+    {
+        "items": [
+            "abc", "def"
+        ],
+        "id": 0,
+        "name": "some list"
+    },
+    {
+        "id": 1,
+        "items": [
+            "dfgs", "acvse"
+        ],
+        "name": "Some other list"
+    }
+]
+

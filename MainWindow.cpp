@@ -6,6 +6,8 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
     wxMenu *menuQuotes = new wxMenu;
     menuQuotes->Append(ID_NewQuote, "&New Quote\tCtrl-N", "Create a new quote");
     menuQuotes->AppendSeparator();
+    menuQuotes->Append(ID_OpenFile, "&Open File\tCtrl-O", "Open an existing quote storage file");
+    menuQuotes->AppendSeparator();
     menuQuotes->Append(wxID_EXIT);
 
     // Create help menu
@@ -21,14 +23,14 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 
     m_panel = new wxPanel(this, wxID_ANY);
     m_quoteList = new QuoteList(m_panel,
-                                    ID_QuoteList,
+                                    wxID_ANY,
                                     wxDefaultPosition,
                                     wxDefaultSize,
                                     wxLC_REPORT | wxBORDER_THEME | wxLC_EDIT_LABELS); 
 
     // Create status bar
     CreateStatusBar();
-    SetStatusText("Some random introduction quote...");
+    SetStatusText("It always seems impossible until it's done.");
 
     // Create list view
     wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
@@ -41,6 +43,7 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 
     // Create button bindings
     Bind(wxEVT_MENU, &MainWindow::OnNewQuote, this, ID_NewQuote);
+    Bind(wxEVT_MENU, &MainWindow::OnOpenFile, this, ID_OpenFile);
     Bind(wxEVT_MENU, &MainWindow::OnAbout, this, wxID_ABOUT);
     Bind(wxEVT_MENU, &MainWindow::OnExit, this, wxID_EXIT);
 }
@@ -51,6 +54,15 @@ void MainWindow::OnNewQuote(wxCommandEvent &evt) {
     if (diag.ShowModal() == wxID_OK) {
         m_quoteList->AddListItem(diag.GetAuthor(), diag.GetQuote());
     }
+}
+
+void MainWindow::OnOpenFile(wxCommandEvent &evt) {
+    wxFileDialog openFileDialog(this, "Open Quote Storage", "", "", "JSON (*.json)|*.json", wxFD_OPEN | wxFD_FILE_MUST_EXIST);
+
+    if (openFileDialog.ShowModal() == wxID_CANCEL) return;
+    
+    m_quoteList->ClearList();
+    m_quoteList->LoadFile(openFileDialog.GetPath());
 }
 
 void MainWindow::OnAbout(wxCommandEvent &evt) {

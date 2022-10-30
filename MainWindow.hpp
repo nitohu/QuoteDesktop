@@ -8,8 +8,8 @@
 
 /**
 * TODO: Store/Save current list of todos
-* TODO: Load different lists with filedialog
 * TODO: Delete elements from the list
+* FIXME: Texts with "Umlaut" (äüöß) are not loaded
 */
 
 class MainWindow : public wxFrame {
@@ -21,6 +21,7 @@ public:
 
 private:
     void OnNewQuote(wxCommandEvent &evt);
+    void OnOpenFile(wxCommandEvent &evt);
     void OnExit(wxCommandEvent &evt);
     void OnAbout(wxCommandEvent &evt);
 
@@ -29,6 +30,6 @@ private:
 
 enum {
     ID_NewQuote = 1,
-    ID_QuoteList
+    ID_OpenFile
 };
 
