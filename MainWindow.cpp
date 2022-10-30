@@ -47,14 +47,13 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 }
 
 void MainWindow::OnNewQuote(wxCommandEvent &evt) {
-    wxLogMessage("Create new quote");
+    // wxLogMessage("Create new quote");
+    m_quoteList->AddListItem("Newly Added", "No Author");
 }
 
 void MainWindow::InitQuoteList() {
     for (int i = 1; i <= 10; i++) {
-        long n = m_quoteList->InsertItem(i, wxString::Format("Item No. %d", i));
-
-        m_quoteList->SetItem(n, 1, wxString::Format("Author %d", i));
+        m_quoteList->AddListItem(wxString::Format("Item No. %d", i), wxString::Format("Author %d", i));
     }
 }
 

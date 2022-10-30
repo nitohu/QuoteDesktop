@@ -11,18 +11,11 @@ public:
                 const wxWindowID id,
                 const wxPoint &pos,
                 const wxSize &size,
-                long style) : wxListCtrl(parent, id, pos, size, style) {
-                    wxListItem qCol;
-                    qCol.SetId(0);
-                    qCol.SetText("Quote");
-                    qCol.SetWidth(500);
-                    this->InsertColumn(0, qCol);
+                long style); 
 
-                    wxListItem aCol;
-                    aCol.SetId(1);
-                    aCol.SetText("Author/Source");
-                    aCol.SetWidth(200);
-                    this->InsertColumn(1, aCol);
-                }
+    void AddListItem(wxString author, wxString quote);
+
+private:
+    static int rec_counter;
 };
 
