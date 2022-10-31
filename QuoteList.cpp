@@ -29,6 +29,23 @@ void QuoteList::AddListItem(wxString author, wxString quote) {
     m_recCounter++;
 }
 
+void QuoteList::DeleteSelectedRecord() {
+    long item = -1;
+    // Find currently selected item, currently works only for single selections, for multiselections it'll only delete the first item
+    item = this->GetNextItem(item, wxLIST_NEXT_ALL, wxLIST_STATE_SELECTED);
+
+    // If item still wasn't found for whatever reason, quote function execution
+    if (item == wxNOT_FOUND) {
+        std::cout << "WARN: No item could be found" << std::endl;
+        return;
+    }
+
+    // TODO: Maybe show messageboxes instead of printing warnings to the console
+    if (!this->DeleteItem(item)) {
+        std::cout << "WARN: Item " << item << " could not be deleted." << std::endl;
+    }
+}
+
 void QuoteList::ClearList() {
     m_recCounter = 0;
     DeleteAllItems();

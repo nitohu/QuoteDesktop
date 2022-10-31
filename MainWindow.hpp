@@ -7,8 +7,6 @@
 #include "QuoteList.hpp"
 
 /**
-* TODO: Store/Save current list of todos
-* TODO: Delete elements from the list
 * FIXME: Texts with "Umlaut" (äüöß) are not loaded
 */
 
@@ -21,6 +19,7 @@ public:
 
 private:
     void OnNewQuote(wxCommandEvent &evt);
+    void OnDeleteQuote(wxCommandEvent &evt);
     void OnOpenFile(wxCommandEvent &evt);
     void OnSave(wxCommandEvent &evt);
     void OnSaveAs(wxCommandEvent &evt);
@@ -32,6 +31,7 @@ private:
 
 enum {
     ID_NewQuote = 1,
+    ID_DeleteQuote,
     ID_OpenFile,
     ID_SaveFile,
     ID_SaveFileAs

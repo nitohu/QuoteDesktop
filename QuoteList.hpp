@@ -12,6 +12,7 @@ public:
     QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, const wxSize &size, long style);
 
     void AddListItem(wxString author, wxString quote);
+    void DeleteSelectedRecord();
     void ClearList();
     void LoadFile(wxString file_path);
     void WriteFile();

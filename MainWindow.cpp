@@ -5,6 +5,7 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
     // Create main quote menu
     wxMenu *menuQuotes = new wxMenu;
     menuQuotes->Append(ID_NewQuote, "&New Quote\tCtrl-N", "Create a new quote");
+    menuQuotes->Append(ID_DeleteQuote, "&Delete Quote\tCtrl-D", "Delete currently selected quote");
     menuQuotes->AppendSeparator();
     menuQuotes->Append(ID_SaveFile, "&Save File\tCtrl-S", "Save current quotes to storage file");
     menuQuotes->Append(ID_SaveFileAs, "Save As...", "Save current quotes in a different file");
@@ -45,6 +46,7 @@ MainWindow::MainWindow() : wxFrame (nullptr, wxID_ANY, "Quotes") {
 
     // Create button bindings
     Bind(wxEVT_MENU, &MainWindow::OnNewQuote, this, ID_NewQuote);
+    Bind(wxEVT_MENU, &MainWindow::OnDeleteQuote, this, ID_DeleteQuote);
     Bind(wxEVT_MENU, &MainWindow::OnSave, this, ID_SaveFile);
     Bind(wxEVT_MENU, &MainWindow::OnSaveAs, this, ID_SaveFileAs);
     Bind(wxEVT_MENU, &MainWindow::OnOpenFile, this, ID_OpenFile);
@@ -58,6 +60,13 @@ void MainWindow::OnNewQuote(wxCommandEvent &evt) {
     if (diag.ShowModal() == wxID_OK) {
         m_quoteList->AddListItem(diag.GetAuthor(), diag.GetQuote());
     }
+}
+
+void MainWindow::OnDeleteQuote(wxCommandEvent &evt) {
+    wxMessageDialog confirmDialog(this, "Are you sure you want to delete this quote?", "Delete Quote", wxOK | wxCANCEL);
+    if (confirmDialog.ShowModal() == wxID_CANCEL) return;
+
+    m_quoteList->DeleteSelectedRecord();
 }
 
 void MainWindow::OnOpenFile(wxCommandEvent &evt) {
