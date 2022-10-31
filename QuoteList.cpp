@@ -24,7 +24,6 @@ QuoteList::QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, 
 }
 
 void QuoteList::AddListItem(wxString author, wxString quote) {
-    std::cout << "Inserting '" << quote << "' from " << author << std::endl;
     long n = this->InsertItem(m_recCounter, quote);
     this->SetItem(n, 1, author);
     m_recCounter++;
@@ -80,14 +79,13 @@ void QuoteList::LoadFile(wxString file_path) {
         DynamicJsonDocument doc(capacity);
         deserializeJson(doc, fileContent->utf8_string());
 
+        // Add items from file to list
         for (int i = 0; i < doc.size(); i++) {
-            std::cout << i << ".: " << doc[i]["quote"] << " from " << doc[i]["author"] << std::endl;
-
             Quote quote(doc[i]["author"], doc[i]["quote"]);
-            // FIXME: Currently no quotes w/ äüöß etc. are loaded
             AddListItem(wxString::FromUTF8(quote.GetAuthor()), wxString::FromUTF8(quote.GetQuote()));
         }
 
+        // free memory for fileContent
         delete fileContent;
 }
 

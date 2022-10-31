@@ -29,12 +29,10 @@ NewQuoteDialog::NewQuoteDialog(wxWindow *parent)
 };
 
 void NewQuoteDialog::OnCreateQuote(wxCommandEvent &evt) {
-    std::cout << "New Quote created" << std::endl;
     this->EndModal(wxID_OK);
 }
 
 void NewQuoteDialog::OnDiscardQuote(wxCommandEvent &evt) {
-    std::cout << "Close dialog" << std::endl;
     this->EndModal(wxID_ANY);
 }
 
