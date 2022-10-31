@@ -24,6 +24,7 @@ QuoteList::QuoteList(wxWindow *parent, const wxWindowID id, const wxPoint &pos, 
 }
 
 void QuoteList::AddListItem(wxString author, wxString quote) {
+    std::cout << "Inserting '" << quote << "' from " << author << std::endl;
     long n = this->InsertItem(m_recCounter, quote);
     this->SetItem(n, 1, author);
     m_recCounter++;
@@ -84,7 +85,7 @@ void QuoteList::LoadFile(wxString file_path) {
 
             Quote quote(doc[i]["author"], doc[i]["quote"]);
             // FIXME: Currently no quotes w/ äüöß etc. are loaded
-            AddListItem(quote.GetAuthor(), quote.GetQuote());
+            AddListItem(wxString::FromUTF8(quote.GetAuthor()), wxString::FromUTF8(quote.GetQuote()));
         }
 
         delete fileContent;

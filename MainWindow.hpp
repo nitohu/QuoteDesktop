@@ -6,10 +6,6 @@
 
 #include "QuoteList.hpp"
 
-/**
-* FIXME: Texts with "Umlaut" (äüöß) are not loaded
-*/
-
 class MainWindow : public wxFrame {
 public:
     MainWindow();
