@@ -52,6 +52,7 @@ void QuoteList::ClearList() {
 }
 
 void QuoteList::LoadFile(wxString file_path) {
+        if(file_path.empty()) return;
         m_filePath = file_path;
 
         // NOTE: Optimization potential, wxTextFile is only fine for small files (<1mb)
