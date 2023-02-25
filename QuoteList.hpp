@@ -22,7 +22,7 @@ private:
     static int m_recCounter;
     static int m_maxArrSize;
 
-    wxString m_filePath = "/home/nitohu/Development/cpp/quotes/example-data.json";
+    wxString m_filePath;
 
     void processFile(wxTextFile&, wxString*);
 };
