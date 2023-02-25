@@ -13,6 +13,7 @@ set(SRC_FILES
     main.cpp)
 
 set(wxBUILD_SHARED OFF)
+# set(wxBUILD_PRECOMP OFF)
 
 FetchContent_Declare(
     wxWidgets
@@ -32,4 +33,9 @@ else()
     add_executable(QuoteApp ${SRC_FILES})
 endif()
 
-target_link_libraries(QuoteApp wxbase wxnet wxcore ArduinoJson)
+if (UNIX)
+    target_link_libraries(QuoteApp wxbase wxnet wxcore ArduinoJson X11)
+else()
+    target_link_libraries(QuoteApp wxbase wxnet wxcore ArduinoJson)
+endif()
+
